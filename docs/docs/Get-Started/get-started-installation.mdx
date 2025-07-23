@@ -1,0 +1,103 @@
+---
+title: Installation
+description: Install Axie Studio and get started building AI workflows
+---
+
+# Installation
+
+This guide will help you install Axie Studio and get started building AI workflows.
+
+## Prerequisites
+
+- Python 3.10 or higher
+- pip (Python package installer)
+- Node.js 18 or higher (for development)
+
+## Quick Install
+
+The fastest way to get started is using pip:
+
+```bash
+pip install axie-studio
+```
+
+Then run Axie Studio:
+
+```bash
+axie-studio run
+```
+
+Visit http://localhost:7860 in your browser to access the Axie Studio interface.
+
+## Development Setup
+
+If you want to contribute or customize Axie Studio:
+
+1. Clone the repository:
+```bash
+git clone https://github.com/YourUsername/axie-studio.git
+cd axie-studio
+```
+
+2. Create a virtual environment:
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
+```
+
+3. Install dependencies:
+```bash
+pip install -e .
+```
+
+4. Install frontend dependencies:
+```bash
+cd src/frontend
+npm install
+```
+
+5. Build the frontend:
+```bash
+npm run build
+```
+
+6. Run the development server:
+```bash
+axie-studio run
+```
+
+## Configuration
+
+### Environment Variables
+
+You can configure Axie Studio using environment variables:
+
+```bash
+# Server configuration
+AXIE_STUDIO_HOST=0.0.0.0
+AXIE_STUDIO_PORT=7860
+
+# Security
+AXIE_STUDIO_AUTH=true
+AXIE_STUDIO_AUTO_LOGIN=false
+
+# Database
+AXIE_STUDIO_DATABASE_URL=sqlite:///./axie_studio.db
+```
+
+### API Keys
+
+Store your API keys securely:
+
+1. Create a `.env` file in your project root
+2. Add your API keys:
+```bash
+OPENAI_API_KEY=your_key_here
+ANTHROPIC_API_KEY=your_key_here
+```
+
+## Next Steps
+
+- [Quickstart Guide](get-started-quickstart)
+- [Component Overview](../components-overview)
+- [Building Flows](../concepts-flows)

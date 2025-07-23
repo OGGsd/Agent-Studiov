@@ -1,0 +1,16 @@
+{
+  "name": "Axie Studio",
+  "short_name": "Axie Studio",
+  "description": "Axie Studio is a powerful tool for building and deploying AI-powered agents and workflows.",
+  "icons": [
+    {
+      "src": "Favicon.jpg",
+      "type": "image/jpeg",
+      "sizes": "32x32"
+    }
+  ],
+  "categories": ["developer", "productivity", "utilities"],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

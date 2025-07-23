@@ -1,0 +1,70 @@
+---
+title: Quickstart
+description: Build your first AI workflow with Axie Studio
+---
+
+# Quickstart Guide
+
+This guide will help you create your first AI workflow using Axie Studio. We'll build a simple chatbot that can answer questions about a specific topic.
+
+## Prerequisites
+
+1. [Install Axie Studio](get-started-installation)
+2. Have an OpenAI API key (or another supported LLM provider)
+
+## Step 1: Start Axie Studio
+
+1. Open a terminal
+2. Run Axie Studio:
+```bash
+axie-studio run
+```
+3. Open http://localhost:7860 in your browser
+
+## Step 2: Create a New Flow
+
+1. Click "Create Flow" in the sidebar
+2. Name your flow "Basic Chatbot"
+
+## Step 3: Add Components
+
+1. From the components sidebar, drag these components onto the canvas:
+   - ChatInput (from IO section)
+   - ChatOpenAI (from Models section)
+   - ChatOutput (from IO section)
+
+2. Connect the components:
+   - ChatInput → ChatOpenAI
+   - ChatOpenAI → ChatOutput
+
+## Step 4: Configure the Model
+
+1. Click on the ChatOpenAI component
+2. In the right sidebar:
+   - Enter your OpenAI API key
+   - Select a model (e.g., "gpt-3.5-turbo")
+   - Adjust temperature if desired (0.7 is a good start)
+
+## Step 5: Test Your Flow
+
+1. Click "Build" in the top right
+2. In the chat panel:
+   - Type a message
+   - Press Enter or click Send
+   - Watch your flow process the input and generate a response
+
+## Next Steps
+
+Now that you've built your first flow, you can:
+
+1. [Learn about Components](../components-overview)
+2. [Explore Flow Building](../concepts-flows)
+3. [Add Memory to Your Chatbot](../memory-chatbot)
+4. [Create Custom Components](../components-custom-components)
+
+## Example Projects
+
+Check out these example projects:
+- [Document Q&A](../document-qa)
+- [Blog Writer](../blog-writer)
+- [Travel Planning Agent](../travel-planning-agent)
