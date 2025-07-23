@@ -1,47 +1,131 @@
-# Axie Studio
+# Agent Studio
 
 [![License](https://img.shields.io/badge/license-MIT-orange)](https://opensource.org/licenses/MIT)
 
-Axie Studio is a powerful tool for building and deploying AI-powered agents and workflows. It provides developers with both a visual authoring experience and built-in API and MCP servers that turn every workflow into a tool that can be integrated into applications built on any framework or stack. Axie Studio comes with batteries included and supports all major LLMs, vector databases and a growing library of AI tools.
+Agent Studio is a powerful tool for building and deploying AI-powered agents and workflows. With our intuitive interface, you can create sophisticated AI applications without writing complex code.
 
-## ✨ Highlight features
+## 🚀 Quick Start
 
-- **Visual builder interface** to quickly get started and iterate.
-- **Source code access** lets you customize any component using Python.
-- **Interactive playground** to immediately test and refine your flows with step-by-step control.
-- **Multi-agent orchestration** with conversation management and retrieval.
-- **Deploy as an API** or export as JSON for Python apps.
-- **Deploy as an MCP server** and turn your flows into tools for MCP clients.
-- **Observability** with LangSmith, LangFuse and other integrations.
-- **Enterprise-ready** security and scalability.
+### Local Development
 
-## ⚡️ Quickstart
-
-Axie Studio requires [Python 3.10 to 3.13](https://www.python.org/downloads/release/python-3100/) and [uv](https://docs.astral.sh/uv/getting-started/installation/).
-
-1. To install Axie Studio, run:
-
-```shell
-uv pip install axie-studio -U
+1. **Clone the repository**
+```bash
+git clone https://github.com/OGGsd/agent-studio.git
+cd agent-studio
 ```
 
-2. To run Axie Studio, run:
+2. **Create a virtual environment**
+```bash
+# Using Python venv
+python -m venv .venv
 
-```shell
-uv run axie-studio run
+# Activate the environment
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
 ```
 
-3. Go to the default Axie Studio URL at `http://127.0.0.1:7860`.
+3. **Install dependencies**
+```bash
+pip install -e .
+```
 
-## 📦 Deployment
+4. **Run the application**
+```bash
+axie-studio run
+```
 
-Axie Studio is completely open source and you can deploy it to all major deployment clouds. To learn how to use Docker to deploy Axie Studio, see the deployment guide in our documentation.
+5. **Access the application**
+Open your browser and navigate to: http://localhost:7860
 
-## 👋 Contribute
+### 🐳 Docker Development
 
-We welcome contributions from developers of all levels. If you'd like to contribute, please check our [contributing guidelines](./CONTRIBUTING.md) and help make Axie Studio more accessible.
+1. **Build the Docker image**
+```bash
+docker build -t agent-studio .
+```
 
-## License
+2. **Run the container**
+```bash
+docker run -p 7860:7860 agent-studio
+```
+
+## 🌐 Production Deployment (DigitalOcean)
+
+### Option 1: App Platform Deployment
+
+1. **Prerequisites**
+- A DigitalOcean account
+- Docker Hub account
+- Your code pushed to GitHub (OGGsd/agent-studio)
+
+2. **Push to Docker Hub**
+```bash
+docker build -t oggsd/agent-studio:latest .
+docker push oggsd/agent-studio:latest
+```
+
+3. **Deploy on DigitalOcean App Platform**
+- Go to DigitalOcean App Platform
+- Click "Create App"
+- Choose "Container Image" as source
+- Enter Docker Hub image: `oggsd/agent-studio:latest`
+- Configure Environment Variables:
+  ```
+  AXIE_STUDIO_HOST=0.0.0.0
+  AXIE_STUDIO_PORT=7860
+  ```
+- Set HTTP port to 7860
+- Deploy your app
+
+### Option 2: Manual Deployment on Droplet
+
+1. **Create a Droplet**
+- Choose Ubuntu 22.04 LTS
+- Minimum 4GB RAM recommended
+
+2. **SSH into your Droplet**
+```bash
+ssh root@your-droplet-ip
+```
+
+3. **Install Docker**
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
+
+4. **Pull and Run the Container**
+```bash
+docker pull oggsd/agent-studio:latest
+docker run -d -p 80:7860 oggsd/agent-studio:latest
+```
+
+## 🔧 Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| AXIE_STUDIO_HOST | Host to bind the server | 0.0.0.0 |
+| AXIE_STUDIO_PORT | Port to run the server | 7860 |
+| AXIE_STUDIO_DATABASE_URL | Database connection string (optional) | sqlite:///./axie_studio.db |
+
+## 🛠️ Features
+
+- **Visual Builder Interface**: Drag-and-drop interface for creating AI workflows
+- **AI Components**: Pre-built components for various AI tasks
+- **Custom Solutions**: Design and deploy your own AI-powered solutions
+- **API Integration**: Built-in API server for integration with other applications
+
+## 📚 Documentation
+
+For more detailed information about using Agent Studio, please refer to our [documentation](https://docs.axie-studio.org).
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
