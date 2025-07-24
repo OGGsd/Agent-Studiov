@@ -10,6 +10,7 @@ export const URLs = {
   BUILDS: `monitor/builds`,
   STORE: `store`,
   USERS: "users",
+  PROFILE: "profile",
   LOGOUT: `logout`,
   LOGIN: `login`,
   AUTOLOGIN: "auto_login",

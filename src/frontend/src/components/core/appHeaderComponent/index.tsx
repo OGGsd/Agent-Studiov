@@ -8,6 +8,7 @@ import CustomAccountMenu from "@/customization/components/custom-AccountMenu";
 import { useCustomNavigate } from "@/customization/hooks/use-custom-navigate";
 import useTheme from "@/customization/hooks/use-custom-theme";
 import useAlertStore from "@/stores/alertStore";
+import { useLogout } from "@/controllers/API/queries/auth";
 import FlowMenu from "./components/FlowMenu";
 
 export default function AppHeader(): JSX.Element {
@@ -16,7 +17,12 @@ export default function AppHeader(): JSX.Element {
   const [activeState, setActiveState] = useState<"notifications" | null>(null);
   const notificationRef = useRef<HTMLButtonElement | null>(null);
   const notificationContentRef = useRef<HTMLDivElement | null>(null);
+  const { mutate: mutationLogout } = useLogout();
   useTheme();
+
+  const handleLogout = () => {
+    mutationLogout();
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -115,6 +121,26 @@ export default function AppHeader(): JSX.Element {
             </AlertDropdown>
           </ShadTooltip>
         </AlertDropdown>
+        <Separator
+          orientation="vertical"
+          className="my-auto h-7 dark:border-zinc-700"
+        />
+
+        <ShadTooltip content="Logout" side="bottom" styleClasses="z-10">
+          <Button
+            unstyled
+            onClick={handleLogout}
+            data-testid="logout_button"
+            className="hit-area-hover group relative items-center rounded-md px-2 py-2 text-muted-foreground hover:text-primary"
+          >
+            <ForwardedIconComponent
+              name="LogOut"
+              className="h-4 w-4"
+              strokeWidth={2}
+            />
+          </Button>
+        </ShadTooltip>
+
         <Separator
           orientation="vertical"
           className="my-auto h-7 dark:border-zinc-700"

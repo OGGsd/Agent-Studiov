@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { User, Settings, CreditCard, BarChart3, Shield } from "lucide-react";
-import { useAlertStore } from "@/stores/alertStore";
+import useAlertStore from "@/stores/alertStore";
 
 interface ProfileData {
   id: string;
@@ -84,12 +84,58 @@ export default function ProfilePage() {
           }
         }
       };
-      
+
       setProfile(mockProfile);
       setEditForm({ username: mockProfile.username, password: "", confirmPassword: "" });
       setLoading(false);
     }, 1000);
   }, []);
+
+  // TODO: Replace mock data with real API calls
+  // useEffect(() => {
+  //   const fetchProfileData = async () => {
+  //     try {
+  //       const profileResponse = await fetch('/api/v1/profile', {
+  //         headers: {
+  //           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+  //           'Content-Type': 'application/json'
+  //         }
+  //       });
+  //
+  //       if (!profileResponse.ok) throw new Error('Failed to fetch profile');
+  //       const profileData = await profileResponse.json();
+  //
+  //       const usageResponse = await fetch('/api/v1/profile/usage', {
+  //         headers: {
+  //           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+  //           'Content-Type': 'application/json'
+  //         }
+  //       });
+  //
+  //       if (!usageResponse.ok) throw new Error('Failed to fetch usage data');
+  //       const usageData = await usageResponse.json();
+  //
+  //       const combinedProfile: ProfileData = {
+  //         id: profileData.id,
+  //         username: profileData.username,
+  //         tier: profileData.tier,
+  //         account_number: profileData.account_number,
+  //         is_active: profileData.is_active,
+  //         created_at: profileData.created_at,
+  //         last_login_at: profileData.last_login_at,
+  //         plan_info: usageData
+  //       };
+  //
+  //       setProfile(combinedProfile);
+  //       setEditForm({ username: combinedProfile.username, password: "", confirmPassword: "" });
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching profile data:', error);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchProfileData();
+  // }, []);
 
   const handleEditProfile = () => {
     setIsEditModalOpen(true);

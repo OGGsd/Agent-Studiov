@@ -16,15 +16,18 @@ import { formatNumber } from "@/utils/utils";
 import useFileDrop from "../hooks/use-on-file-drop";
 
 const EMPTY_PAGE_TITLE = "Welcome to Axie Studio";
-const EMPTY_PAGE_DESCRIPTION = "Your new favorite way to ship Agents";
-const EMPTY_PAGE_GITHUB_DESCRIPTION =
-  "Follow development, star the repo, and shape the future.";
-const EMPTY_PAGE_DISCORD_DESCRIPTION =
-  "Join builders, ask questions, and show off your agents";
+const EMPTY_PAGE_DESCRIPTION = "Build powerful AI agents and workflows with ease";
+const EMPTY_PAGE_SUBTITLE = "The professional platform for creating, deploying, and managing AI-powered solutions";
+const EMPTY_PAGE_FEATURES = [
+  "🤖 AI Agent Builder",
+  "🔗 Workflow Automation",
+  "📊 Analytics Dashboard",
+  "🚀 One-Click Deployment"
+];
 const EMPTY_PAGE_DRAG_AND_DROP_TEXT =
   "Already have a flow? Drag and drop to upload.";
 const EMPTY_PAGE_FOLDER_DESCRIPTION = "Empty folder";
-const EMPTY_PAGE_CREATE_FIRST_FLOW_BUTTON_TEXT = "Create first flow";
+const EMPTY_PAGE_CREATE_FIRST_FLOW_BUTTON_TEXT = "Create Your First Agent";
 
 const EXTERNAL_LINK_ICON_CLASS =
   "absolute right-6 top-[35px] h-4 w-4 shrink-0 translate-x-0 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100";
@@ -64,126 +67,161 @@ export const EmptyPageCommunity = ({
         dragMessage={`Drop your flows or components here`}
         onFileDrop={handleFileDrop}
       >
-        <div className="m-0 h-full w-full bg-background p-0">
-          <div className="z-50 flex h-full w-full flex-col items-center justify-center gap-5">
-            <div className="z-50 flex flex-col items-center gap-2">
-              <div className="z-50 dark:hidden">
-                <img
-                  src={logoLightPng}
-                  alt="Axie Studio Logo Light"
-                  data-testid="empty_page_logo_light"
-                  className="relative top-3"
-                />
-              </div>
-              <div className="z-50 hidden dark:block">
-                <img
-                  src={logoDarkPng}
-                  alt="Axie Studio Logo Dark"
-                  data-testid="empty_page_logo_dark"
-                  className="relative top-3"
-                />
-              </div>
-              <span
-                data-testid="mainpage_title"
-                className="z-50 text-center font-chivo text-2xl font-medium text-foreground"
-              >
-                {EMPTY_PAGE_TITLE}
-              </span>
+        <div className="m-0 h-full w-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 p-0">
+          <div className="z-50 flex h-full w-full flex-col items-center justify-center gap-8 px-4">
 
-              <span
-                data-testid="empty_page_description"
-                className="z-50 text-center text-base text-secondary-foreground"
-              >
-                {folders?.length > 1
-                  ? EMPTY_PAGE_FOLDER_DESCRIPTION
-                  : EMPTY_PAGE_DESCRIPTION}
-              </span>
+            {/* Hero Section */}
+            <div className="z-50 flex flex-col items-center gap-6 max-w-4xl text-center">
+
+              {/* Logo */}
+              <div className="z-50 mb-4">
+                <div className="dark:hidden">
+                  <img
+                    src={logoLightPng}
+                    alt="Axie Studio Logo"
+                    data-testid="empty_page_logo_light"
+                    className="h-20 w-20 mx-auto drop-shadow-lg"
+                  />
+                </div>
+                <div className="hidden dark:block">
+                  <img
+                    src={logoDarkPng}
+                    alt="Axie Studio Logo"
+                    data-testid="empty_page_logo_dark"
+                    className="h-20 w-20 mx-auto drop-shadow-lg"
+                  />
+                </div>
+              </div>
+
+              {/* Main Title */}
+              <div className="space-y-4">
+                <h1
+                  data-testid="mainpage_title"
+                  className="z-50 text-center font-bold text-5xl bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 bg-clip-text text-transparent dark:from-indigo-400 dark:via-purple-400 dark:to-blue-400"
+                >
+                  {folders?.length > 1 ? "Empty Folder" : EMPTY_PAGE_TITLE}
+                </h1>
+
+                <p
+                  data-testid="empty_page_description"
+                  className="z-50 text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto"
+                >
+                  {folders?.length > 1
+                    ? EMPTY_PAGE_FOLDER_DESCRIPTION
+                    : EMPTY_PAGE_DESCRIPTION}
+                </p>
+
+                {folders?.length <= 1 && (
+                  <p className="z-50 text-lg text-slate-500 dark:text-slate-400 max-w-3xl mx-auto">
+                    {EMPTY_PAGE_SUBTITLE}
+                  </p>
+                )}
+              </div>
+
+              {/* Features Grid */}
+              {folders?.length <= 1 && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 mb-8">
+                  {EMPTY_PAGE_FEATURES.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-lg p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-200"
+                    >
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            <div className="flex w-full max-w-[510px] flex-col gap-7 sm:gap-[29px]">
-              <Button
-                unstyled
-                className="group mx-3 h-[84px] sm:mx-0"
-                onClick={() => {
-                  handleUserTrack("github_starred")();
-                  window.open(GITHUB_URL, "_blank", "noopener,noreferrer");
-                }}
-                data-testid="empty_page_github_button"
-              >
-                <div className="relative flex flex-col rounded-lg border-[1px] bg-background p-4 transition-all duration-300 hover:border-accent-pink-foreground">
-                  <div className="grid w-full items-center justify-between gap-2">
-                    <div className="flex gap-3">
-                      <FaGithub className="h-6 w-6" />
-                      <div>
-                        <span className="font-semibold">GitHub</span>
-                        <span className="ml-2 font-mono text-muted-foreground">
-                          {formatNumber(stars)}
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-base text-secondary-foreground">
-                        {EMPTY_PAGE_GITHUB_DESCRIPTION}
-                      </span>
-                    </div>
-                  </div>
-                  <ExternalLink className={EXTERNAL_LINK_ICON_CLASS} />
-                </div>
-              </Button>
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-6 items-center justify-center max-w-2xl w-full">
 
+              {/* Main CTA */}
               <Button
-                unstyled
-                className="group mx-3 h-[84px] sm:mx-0"
-                onClick={() => {
-                  handleUserTrack("discord_clicked")();
-                  window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
-                }}
-                data-testid="empty_page_discord_button"
-              >
-                <div className="relative flex flex-col rounded-lg border-[1px] bg-background p-4 transition-all duration-300 hover:border-discord-color">
-                  <div className="grid w-full items-center justify-between gap-2">
-                    <div className="flex gap-3">
-                      <FaDiscord className="h-6 w-6 text-discord-color" />
-                      <div>
-                        <span className="font-semibold">Discord</span>
-                        <span className="ml-2 font-mono text-muted-foreground">
-                          {formatNumber(discordCount)}
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-base text-secondary-foreground">
-                        {EMPTY_PAGE_DISCORD_DESCRIPTION}
-                      </span>
-                    </div>
-                  </div>
-                  <ExternalLink className={EXTERNAL_LINK_ICON_CLASS} />
-                </div>
-              </Button>
-
-              <Button
-                variant="default"
-                className="z-10 m-auto mt-3 h-10 w-full max-w-[10rem] rounded-lg font-bold transition-all duration-300"
                 onClick={() => setOpenModal(true)}
-                id="new-project-btn"
+                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                 data-testid="new_project_btn_empty_page"
               >
-                <ForwardedIconComponent
-                  name="Plus"
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                />
-                <span>{EMPTY_PAGE_CREATE_FIRST_FLOW_BUTTON_TEXT}</span>
+                <ForwardedIconComponent name="Plus" className="mr-2 h-5 w-5" />
+                {EMPTY_PAGE_CREATE_FIRST_FLOW_BUTTON_TEXT}
               </Button>
+
+              {/* Tier-Specific Login Options */}
+              {folders?.length <= 1 && (
+                <div className="w-full space-y-4">
+                  <div className="text-center">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                      Access your account by tier:
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {/* Starter Login */}
+                    <Button
+                      variant="outline"
+                      onClick={() => window.location.href = '/login'}
+                      className="w-full border-green-200 text-green-700 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-900/20 font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                    >
+                      <ForwardedIconComponent name="Zap" className="mr-2 h-4 w-4" />
+                      Starter Login
+                    </Button>
+
+                    {/* Professional Login */}
+                    <Button
+                      variant="outline"
+                      onClick={() => window.location.href = '/login'}
+                      className="w-full border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-700 dark:text-blue-400 dark:hover:bg-blue-900/20 font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                    >
+                      <ForwardedIconComponent name="Star" className="mr-2 h-4 w-4" />
+                      Professional Login
+                    </Button>
+
+                    {/* Enterprise Login */}
+                    <Button
+                      variant="outline"
+                      onClick={() => window.location.href = '/login'}
+                      className="w-full border-purple-200 text-purple-700 hover:bg-purple-50 dark:border-purple-700 dark:text-purple-400 dark:hover:bg-purple-900/20 font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                    >
+                      <ForwardedIconComponent name="Crown" className="mr-2 h-4 w-4" />
+                      Enterprise Login
+                    </Button>
+                  </div>
+
+                  {/* Admin Access */}
+                  <div className="text-center pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <Button
+                      variant="outline"
+                      onClick={() => window.location.href = '/login/admin'}
+                      className="border-red-200 text-red-700 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20 font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                    >
+                      <ForwardedIconComponent name="Shield" className="mr-2 h-4 w-4" />
+                      🔐 Administrator Access
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Drag and Drop Hint */}
+            <div className="mt-8 text-center">
+              <p
+                data-testid="empty_page_drag_and_drop_text"
+                className="text-sm text-slate-500 dark:text-slate-400 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700"
+              >
+                💡 {EMPTY_PAGE_DRAG_AND_DROP_TEXT}
+              </p>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-auto mb-8 text-center">
+              <p className="text-xs text-slate-400 dark:text-slate-500">
+                Powered by Axie Studio • Professional AI Workflow Platform
+              </p>
             </div>
           </div>
         </div>
-        <p
-          data-testid="empty_page_drag_and_drop_text"
-          className="absolute bottom-5 left-0 right-0 mt-4 cursor-default text-center text-xxs text-muted-foreground"
-        >
-          {EMPTY_PAGE_DRAG_AND_DROP_TEXT}
-        </p>
       </CardsWrapComponent>
     </DotBackgroundDemo>
   );

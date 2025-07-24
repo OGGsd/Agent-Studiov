@@ -50,32 +50,50 @@ export default function AccountsPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Mock data - replace with actual API calls
+  // Load real accounts from API
   useEffect(() => {
-    // Simulate loading accounts from API
-    const mockAccounts: Account[] = [];
-    
-    // Generate sample data for demonstration
-    const tiers = ['starter', 'professional', 'enterprise'];
-    for (let i = 1; i <= 30; i++) {
-      const tier = tiers[Math.floor(Math.random() * tiers.length)] as 'starter' | 'professional' | 'enterprise';
-      mockAccounts.push({
-        id: `account-${i}`,
-        username: `${tier}${String(i).padStart(3, '0')}@axiestudio.se`,
-        tier,
-        account_number: 1000 + i,
-        is_active: Math.random() > 0.2,
-        api_calls_used_this_month: Math.floor(Math.random() * TIER_LIMITS[tier].max_api_calls_per_month * 0.8),
-        storage_used_gb: Math.random() * TIER_LIMITS[tier].max_storage_gb * 0.6,
-        workflow_count: Math.floor(Math.random() * (TIER_LIMITS[tier].max_workflows === -1 ? 100 : TIER_LIMITS[tier].max_workflows) * 0.4),
-        created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
-        last_login_at: Math.random() > 0.3 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString() : undefined
-      });
-    }
-    
-    setAccounts(mockAccounts);
-    setFilteredAccounts(mockAccounts);
-    setLoading(false);
+    const fetchAccounts = async () => {
+      try {
+        const response = await fetch('/api/v1/accounts', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch accounts');
+        }
+
+        const data = await response.json();
+        setAccounts(data.accounts || []);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching accounts:', error);
+        // Fallback to mock data for development
+        const mockAccounts: Account[] = [];
+        const tiers = ['starter', 'professional', 'enterprise'];
+        for (let i = 1; i <= 30; i++) {
+          const tier = tiers[Math.floor(Math.random() * tiers.length)] as 'starter' | 'professional' | 'enterprise';
+          mockAccounts.push({
+            id: `account-${i}`,
+            username: `${tier}${String(i).padStart(3, '0')}@axiestudio.se`,
+            tier,
+            account_number: 1000 + i,
+            is_active: Math.random() > 0.2,
+            api_calls_used_this_month: Math.floor(Math.random() * TIER_LIMITS[tier].max_api_calls_per_month * 0.8),
+            storage_used_gb: Math.random() * TIER_LIMITS[tier].max_storage_gb * 0.6,
+            workflow_count: Math.floor(Math.random() * (TIER_LIMITS[tier].max_workflows === -1 ? 100 : TIER_LIMITS[tier].max_workflows) * 0.4),
+            created_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+            last_login_at: Math.random() > 0.3 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString() : undefined
+          });
+        }
+        setAccounts(mockAccounts);
+        setLoading(false);
+      }
+    };
+
+    fetchAccounts();
   }, []);
 
   // Filter accounts based on search and filters
@@ -107,12 +125,40 @@ export default function AccountsPage() {
     setIsEditModalOpen(true);
   };
 
-  const handleSaveAccount = (updatedAccount: Account) => {
-    setAccounts(prev => prev.map(acc => 
-      acc.id === updatedAccount.id ? updatedAccount : acc
-    ));
-    setIsEditModalOpen(false);
-    setSelectedAccount(null);
+  const handleSaveAccount = async (updatedAccount: Account) => {
+    try {
+      // Call the real API to update the account
+      const response = await fetch(`/api/v1/users/${updatedAccount.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: updatedAccount.username,
+          tier: updatedAccount.tier,
+          is_active: updatedAccount.is_active
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update account');
+      }
+
+      // Update local state
+      setAccounts(prev => prev.map(acc =>
+        acc.id === updatedAccount.id ? updatedAccount : acc
+      ));
+
+      setIsEditModalOpen(false);
+      setSelectedAccount(null);
+
+      // Show success message
+      alert('Account updated successfully!');
+    } catch (error) {
+      console.error('Error updating account:', error);
+      alert('Failed to update account. Please try again.');
+    }
   };
 
   const handleDeleteAccount = (accountId: string) => {

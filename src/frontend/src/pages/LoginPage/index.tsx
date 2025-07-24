@@ -71,18 +71,29 @@ export default function LoginPage(): JSX.Element {
       }}
       className="h-screen w-full"
     >
-      <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-        <div className="flex w-96 flex-col items-center justify-center gap-2 rounded-lg bg-white p-8 shadow-xl border border-slate-200">
-          <AxieStudioLogo
-            title="Axie Studio logo"
-            className="mb-6 h-16 w-16"
-          />
-          <span className="mb-8 text-3xl font-bold text-slate-800">
-            Axie Studio
-          </span>
-          <span className="mb-6 text-lg text-slate-600">
-            Sign in to continue
-          </span>
+      <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 px-4">
+        <div className="w-full max-w-md">
+          {/* Login Card */}
+          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-8">
+
+            {/* Logo and Header */}
+            <div className="text-center mb-8">
+              <AxieStudioLogo
+                title="Axie Studio logo"
+                className="mb-6 h-20 w-20 mx-auto drop-shadow-lg"
+              />
+              <div className="space-y-2">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 bg-clip-text text-transparent dark:from-indigo-400 dark:via-purple-400 dark:to-blue-400">
+                  Axie Studio
+                </h1>
+                <p className="text-lg text-slate-600 dark:text-slate-300 font-medium">
+                  Professional AI Platform
+                </p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Sign in to access your workspace
+                </p>
+              </div>
+            </div>
           <div className="mb-4 w-full">
             <Form.Field name="username">
               <Form.Label className="data-[invalid]:label-invalid text-sm font-medium text-slate-700">
@@ -130,23 +141,28 @@ export default function LoginPage(): JSX.Element {
               </Form.Message>
             </Form.Field>
           </div>
-          <div className="w-full">
-            <Form.Submit asChild>
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200" type="submit">
-                Sign In
-              </Button>
-            </Form.Submit>
-          </div>
-          {/* Signup removed - Commercial pre-configured accounts only */}
-          <div className="mt-4 w-full text-center">
-            <p className="text-sm text-slate-600">
-              Need an account? Contact sales for pre-configured access.
-            </p>
-          </div>
-          <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500">
-              Welcome to Axie Studio
-            </p>
+            {/* Login Button */}
+            <div className="mt-8 w-full">
+              <Form.Submit asChild>
+                <Button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105" type="submit">
+                  Sign In to Axie Studio
+                </Button>
+              </Form.Submit>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-6 space-y-4 text-center">
+              <div className="border-t border-slate-200 dark:border-slate-600 pt-4">
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Need an account? Contact sales for pre-configured access.
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 dark:text-slate-500">
+                  Powered by Axie Studio • Professional AI Platform
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
