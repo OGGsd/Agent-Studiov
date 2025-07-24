@@ -149,7 +149,7 @@ ignore_missing_imports = true
 
 [tool.ruff]
 target-version = "py310"
-exclude = ["langflow/alembic/versions"]
+exclude = ["axie_studio/alembic/versions"]
 line-length = 120
 
 [tool.ruff.lint]

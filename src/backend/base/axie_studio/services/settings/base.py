@@ -65,23 +65,23 @@ class MyCustomSource(EnvSettingsSource):
 
 
 class Settings(BaseSettings):
-    # Define the default LANGFLOW_DIR
+    # Define the default AXIE_STUDIO_DIR
     config_dir: str | None = None
-    # Define if langflow db should be saved in config dir or
-    # in the langflow directory
+    # Define if axie_studio db should be saved in config dir or
+    # in the axie_studio directory
     save_db_in_config_dir: bool = False
-    """Define if langflow database should be saved in LANGFLOW_CONFIG_DIR or in the langflow directory
+    """Define if axie_studio database should be saved in AXIE_STUDIO_CONFIG_DIR or in the axie_studio directory
     (i.e. in the package directory)."""
 
     dev: bool = False
-    """If True, Langflow will run in development mode."""
+    """If True, Axie Studio will run in development mode."""
     database_url: str | None = None
-    """Database URL for Langflow. If not provided, Langflow will use a SQLite database.
+    """Database URL for Axie Studio. If not provided, Axie Studio will use a SQLite database.
     The driver shall be an async one like `sqlite+aiosqlite` (`sqlite` and `postgresql`
     will be automatically converted to the async drivers `sqlite+aiosqlite` and
     `postgresql+psycopg` respectively)."""
     database_connection_retry: bool = False
-    """If True, Langflow will retry to connect to the database if it fails."""
+    """If True, Axie Studio will retry to connect to the database if it fails."""
     pool_size: int = 20
     """The number of connections to keep open in the connection pool.
     For high load scenarios, this should be increased based on expected concurrent users."""
@@ -183,39 +183,39 @@ class Settings(BaseSettings):
     """Timeout for the API calls in seconds."""
     frontend_timeout: int = 0
     """Timeout for the frontend API calls in seconds."""
-    user_agent: str = "langflow"
+    user_agent: str = "axie_studio"
     """User agent for the API calls."""
     backend_only: bool = False
-    """If set to True, Langflow will not serve the frontend."""
+    """If set to True, Axie Studio will not serve the frontend."""
 
     # Telemetry
     do_not_track: bool = False
-    """If set to True, Langflow will not track telemetry."""
-    telemetry_base_url: str = "https://langflow.gateway.scarf.sh"
+    """If set to True, Axie Studio will not track telemetry."""
+    telemetry_base_url: str = "https://axiestudio.gateway.scarf.sh"
     transactions_storage_enabled: bool = True
-    """If set to True, Langflow will track transactions between flows."""
+    """If set to True, Axie Studio will track transactions between flows."""
     vertex_builds_storage_enabled: bool = True
-    """If set to True, Langflow will keep track of each vertex builds (outputs) in the UI for any flow."""
+    """If set to True, Axie Studio will keep track of each vertex builds (outputs) in the UI for any flow."""
 
     # Config
     host: str = "localhost"
-    """The host on which Langflow will run."""
+    """The host on which Axie Studio will run."""
     port: int = 7860
-    """The port on which Langflow will run."""
+    """The port on which Axie Studio will run."""
     workers: int = 1
     """The number of workers to run."""
     log_level: str = "critical"
-    """The log level for Langflow."""
-    log_file: str | None = "logs/langflow.log"
-    """The path to log file for Langflow."""
+    """The log level for Axie Studio."""
+    log_file: str | None = "logs/axie_studio.log"
+    """The path to log file for Axie Studio."""
     alembic_log_file: str = "alembic/alembic.log"
     """The path to log file for Alembic for SQLAlchemy."""
     frontend_path: str | None = None
     """The path to the frontend directory containing build files. This is for development purposes only.."""
     open_browser: bool = False
-    """If set to True, Langflow will open the browser on startup."""
+    """If set to True, Axie Studio will open the browser on startup."""
     auto_saving: bool = True
-    """If set to True, Langflow will auto save flows."""
+    """If set to True, Axie Studio will auto save flows."""
     auto_saving_interval: int = 1000
     """The interval in ms at which Langflow will auto save flows."""
     health_check_max_retries: int = 5
@@ -261,16 +261,16 @@ class Settings(BaseSettings):
     event_delivery: Literal["polling", "streaming", "direct"] = "streaming"
     """How to deliver build events to the frontend. Can be 'polling', 'streaming' or 'direct'."""
     lazy_load_components: bool = False
-    """If set to True, Langflow will only partially load components at startup and fully load them on demand.
+    """If set to True, Axie Studio will only partially load components at startup and fully load them on demand.
     This significantly reduces startup time but may cause a slight delay when a component is first used."""
 
     # Starter Projects
     create_starter_projects: bool = True
-    """If set to True, Langflow will create starter projects. If False, skips all starter project setup.
+    """If set to True, Axie Studio will create starter projects. If False, skips all starter project setup.
     Note that this doesn't check if the starter projects are already loaded in the db;
     this is intended to be used to skip all startup project logic."""
     update_starter_projects: bool = True
-    """If set to True, Langflow will update starter projects."""
+    """If set to True, Axie Studio will update starter projects."""
 
     @field_validator("use_noop_database", mode="before")
     @classmethod
@@ -325,18 +325,18 @@ class Settings(BaseSettings):
 
     @field_validator("config_dir", mode="before")
     @classmethod
-    def set_langflow_dir(cls, value):
+    def set_axie_studio_dir(cls, value):
         if not value:
             from platformdirs import user_cache_dir
 
             # Define the app name and author
-            app_name = "langflow"
-            app_author = "langflow"
+            app_name = "axie_studio"
+            app_author = "axie_studio"
 
             # Get the cache directory for the application
             cache_dir = user_cache_dir(app_name, app_author)
 
-            # Create a .langflow directory inside the cache directory
+            # Create a .axie_studio directory inside the cache directory
             value = Path(cache_dir)
             value.mkdir(parents=True, exist_ok=True)
 
@@ -432,16 +432,16 @@ class Settings(BaseSettings):
         """
         if os.getenv("LANGFLOW_COMPONENTS_PATH"):
             logger.debug("Adding LANGFLOW_COMPONENTS_PATH to components_path")
-            langflow_component_path = os.getenv("LANGFLOW_COMPONENTS_PATH")
-            if Path(langflow_component_path).exists() and langflow_component_path not in value:
-                if isinstance(langflow_component_path, list):
-                    for path in langflow_component_path:
+            axie_studio_component_path = os.getenv("AXIE_STUDIO_COMPONENTS_PATH")
+            if Path(axie_studio_component_path).exists() and axie_studio_component_path not in value:
+                if isinstance(axie_studio_component_path, list):
+                    for path in axie_studio_component_path:
                         if path not in value:
                             value.append(path)
-                    logger.debug(f"Extending {langflow_component_path} to components_path")
-                elif langflow_component_path not in value:
-                    value.append(langflow_component_path)
-                    logger.debug(f"Appending {langflow_component_path} to components_path")
+                    logger.debug(f"Extending {axie_studio_component_path} to components_path")
+                elif axie_studio_component_path not in value:
+                    value.append(axie_studio_component_path)
+                    logger.debug(f"Appending {axie_studio_component_path} to components_path")
 
         if not value:
             value = [BASE_COMPONENTS_PATH]
@@ -456,7 +456,7 @@ class Settings(BaseSettings):
         logger.debug(f"Components path: {value}")
         return value
 
-    model_config = SettingsConfigDict(validate_assignment=True, extra="ignore", env_prefix="LANGFLOW_")
+    model_config = SettingsConfigDict(validate_assignment=True, extra="ignore", env_prefix="AXIE_STUDIO_")
 
     async def update_from_yaml(self, file_path: str, *, dev: bool = False) -> None:
         new_settings = await load_settings_from_yaml(file_path)

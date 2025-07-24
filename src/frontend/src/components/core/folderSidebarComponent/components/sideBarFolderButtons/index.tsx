@@ -24,7 +24,7 @@ import { useGetDownloadFolders } from "@/controllers/API/queries/folders/use-get
 import { CustomStoreButton } from "@/customization/components/custom-store-button";
 import {
   ENABLE_CUSTOM_PARAM,
-  ENABLE_DATASTAX_LANGFLOW,
+  ENABLE_DATASTAX_AXIE_STUDIO,
   ENABLE_FILE_MANAGEMENT,
   ENABLE_MCP_NOTICE,
 } from "@/customization/feature-flags";

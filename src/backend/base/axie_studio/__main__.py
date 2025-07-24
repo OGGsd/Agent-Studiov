@@ -335,7 +335,7 @@ def run(
         with progress.step(5):
             pass  # Starter projects are added during app startup
 
-    # Step 6: Launching Langflow
+    # Step 6: Launching Axie Studio
     if platform.system() == "Windows":
         with progress.step(6):
             import uvicorn
@@ -661,9 +661,9 @@ def copy_db() -> None:
 
     from platformdirs import user_cache_dir
 
-    cache_dir = Path(user_cache_dir("langflow"))
-    db_path = cache_dir / "langflow.db"
-    pre_db_path = cache_dir / "langflow-pre.db"
+    cache_dir = Path(user_cache_dir("axie_studio"))
+    db_path = cache_dir / "axie_studio.db"
+    pre_db_path = cache_dir / "axie_studio-pre.db"
     # It should be copied to the current directory
     # this file is __main__.py and it should be in the same directory as the database
     destination_folder = Path(__file__).parent

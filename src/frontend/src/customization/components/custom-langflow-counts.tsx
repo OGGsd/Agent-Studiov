@@ -1,7 +1,7 @@
-import { LangflowCounts } from "@/components/core/appHeaderComponent/components/langflow-counts";
+import { AxieStudioCounts } from "@/components/core/appHeaderComponent/components/axie-studio-counts";
 
-export function CustomLangflowCounts() {
-  return <LangflowCounts />;
+export function CustomAxieStudioCounts() {
+  return <AxieStudioCounts />;
 }
 
-export default CustomLangflowCounts;
+export default CustomAxieStudioCounts;

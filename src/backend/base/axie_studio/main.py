@@ -213,7 +213,7 @@ def get_lifespan(*, fix_migration=False, version=None):
         except asyncio.CancelledError:
             logger.debug("Lifespan received cancellation signal")
         except Exception as exc:
-            if "langflow migration --fix" not in str(exc):
+            if "axie_studio migration --fix" not in str(exc):
                 logger.exception(exc)
             raise
         finally:
@@ -222,7 +222,7 @@ def get_lifespan(*, fix_migration=False, version=None):
             from axie_studio.__main__ import get_number_of_workers
             from axie_studio.cli.progress import create_langflow_shutdown_progress
 
-            log_level = os.getenv("LANGFLOW_LOG_LEVEL", "info").lower()
+            log_level = os.getenv("AXIE_STUDIO_LOG_LEVEL", "info").lower()
             num_workers = get_number_of_workers(get_settings_service().settings.workers)
             shutdown_progress = create_langflow_shutdown_progress(
                 verbose=log_level == "debug", multiple_workers=num_workers > 1

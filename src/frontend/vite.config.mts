@@ -50,11 +50,11 @@ export default defineConfig(({ mode }) => {
         envLangflow.ACCESS_TOKEN_EXPIRE_SECONDS ?? 60,
       ),
       "process.env.CI": JSON.stringify(envLangflow.CI ?? false),
-      "process.env.LANGFLOW_AUTO_LOGIN": JSON.stringify(
-        envLangflow.LANGFLOW_AUTO_LOGIN ?? true,
+      "process.env.AXIE_STUDIO_AUTO_LOGIN": JSON.stringify(
+        envLangflow.AXIE_STUDIO_AUTO_LOGIN ?? true,
       ),
-      "process.env.LANGFLOW_FEATURE_MCP_COMPOSER": JSON.stringify(
-        envLangflow.LANGFLOW_FEATURE_MCP_COMPOSER ?? "false",
+      "process.env.AXIE_STUDIO_FEATURE_MCP_COMPOSER": JSON.stringify(
+        envLangflow.AXIE_STUDIO_FEATURE_MCP_COMPOSER ?? "false",
       ),
     },
     plugins: [react(), svgr(), tsconfigPaths()],

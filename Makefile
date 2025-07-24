@@ -195,7 +195,7 @@ lint: install_backend ## run linters
 
 run_cli: install_frontend install_backend build_frontend ## run the CLI
 	@echo 'Running the CLI'
-	@uv run langflow run \
+	@uv run axie_studio run \
 		--frontend-path $(path) \
 		--log-level $(log_level) \
 		--host $(host) \

@@ -645,7 +645,7 @@ export const LAST_USED_SPAN_1 = "The last time this key was used.";
 export const LAST_USED_SPAN_2 =
   "Accurate to within the hour from the most recent usage.";
 
-export const LANGFLOW_SUPPORTED_TYPES = new Set([
+export const AXIE_STUDIO_SUPPORTED_TYPES = new Set([
   "str",
   "bool",
   "float",
@@ -716,7 +716,7 @@ export const INPUT_HANDLER_HOVER = "Avaliable input components:";
 export const OUTPUT_HANDLER_HOVER = "Avaliable output components:";
 export const TEXT_INPUT_MODAL_TITLE = "Inputs";
 export const OUTPUTS_MODAL_TITLE = "Outputs";
-export const LANGFLOW_CHAT_TITLE = "Axie Studio Chat";
+export const AXIE_STUDIO_CHAT_TITLE = "Axie Studio Chat";
 export const CHAT_INPUT_PLACEHOLDER =
   "No chat input variables found. Click to run your agent.";
 export const CHAT_INPUT_PLACEHOLDER_SEND = "Send a message...";
@@ -958,13 +958,13 @@ export const TABS_ORDER = [
   "chat widget html",
 ];
 
-export const LANGFLOW_ACCESS_TOKEN = "access_token_lf";
-export const LANGFLOW_API_TOKEN = "apikey_tkn_lflw";
-export const LANGFLOW_AUTO_LOGIN_OPTION = "auto_login_lf";
-export const LANGFLOW_REFRESH_TOKEN = "refresh_token_lf";
+export const AXIE_STUDIO_ACCESS_TOKEN = "access_token_axie";
+export const AXIE_STUDIO_API_TOKEN = "apikey_tkn_axie";
+export const AXIE_STUDIO_AUTO_LOGIN_OPTION = "auto_login_axie";
+export const AXIE_STUDIO_REFRESH_TOKEN = "refresh_token_axie";
 
-export const LANGFLOW_ACCESS_TOKEN_EXPIRE_SECONDS = 60 * 60 - 60 * 60 * 0.1;
-export const LANGFLOW_ACCESS_TOKEN_EXPIRE_SECONDS_ENV =
+export const AXIE_STUDIO_ACCESS_TOKEN_EXPIRE_SECONDS = 60 * 60 - 60 * 60 * 0.1;
+export const AXIE_STUDIO_ACCESS_TOKEN_EXPIRE_SECONDS_ENV =
   Number(process.env?.ACCESS_TOKEN_EXPIRE_SECONDS ?? 60) -
   Number(process.env?.ACCESS_TOKEN_EXPIRE_SECONDS ?? 60) * 0.1;
 export const TEXT_FIELD_TYPES: string[] = ["str", "SecretStr"];
@@ -1033,8 +1033,8 @@ export const POLLING_MESSAGES = {
 export const BUILD_POLLING_INTERVAL = 25;
 
 export const IS_AUTO_LOGIN =
-  !process?.env?.LANGFLOW_AUTO_LOGIN ||
-  String(process?.env?.LANGFLOW_AUTO_LOGIN)?.toLowerCase() !== "false";
+  !process?.env?.AXIE_STUDIO_AUTO_LOGIN ||
+  String(process?.env?.AXIE_STUDIO_AUTO_LOGIN)?.toLowerCase() !== "false";
 
 export const AUTO_LOGIN_RETRY_DELAY = 2000;
 export const AUTO_LOGIN_MAX_RETRY_DELAY = 60000;
