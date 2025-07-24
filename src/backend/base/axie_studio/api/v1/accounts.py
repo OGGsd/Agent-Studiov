@@ -5,11 +5,12 @@ Endpoints for managing pre-configured commercial accounts.
 
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
+from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy import and_, or_
 
 from axie_studio.services.database.models.user.model import User, UserTier, UserUpdate, TIER_LIMITS
-from axie_studio.services.deps import get_session, get_current_active_superuser
+from axie_studio.services.deps import get_session
+from axie_studio.services.auth.utils import get_current_active_superuser
 from axie_studio.services.account_manager import AccountManager
 from pydantic import BaseModel
 
@@ -49,7 +50,7 @@ class AccountStats(BaseModel):
 
 @router.get("/", response_model=List[AccountResponse])
 async def get_all_accounts(
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser),
     tier: Optional[str] = Query(None, description="Filter by tier"),
     active: Optional[bool] = Query(None, description="Filter by active status"),
@@ -112,7 +113,7 @@ async def get_all_accounts(
 
 @router.get("/stats", response_model=AccountStats)
 async def get_account_stats(
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Get statistics about all accounts."""
@@ -138,7 +139,7 @@ async def get_account_stats(
 @router.get("/{account_id}", response_model=AccountResponse)
 async def get_account(
     account_id: str,
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Get a specific account by ID."""
@@ -174,7 +175,7 @@ async def get_account(
 async def update_account(
     account_id: str,
     account_update: AccountUpdate,
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Update an account's details."""
@@ -218,7 +219,7 @@ async def update_account(
 @router.delete("/{account_id}")
 async def delete_account(
     account_id: str,
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Delete an account (use with caution)."""
@@ -239,7 +240,7 @@ async def delete_account(
 
 @router.post("/import")
 async def import_accounts(
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Import pre-configured accounts from the accounts data file."""
@@ -257,7 +258,7 @@ async def import_accounts(
 
 @router.post("/reset-monthly-usage")
 async def reset_monthly_usage(
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Reset API call usage for all accounts (run monthly)."""
@@ -272,7 +273,7 @@ async def reset_monthly_usage(
 
 @router.get("/export/csv")
 async def export_accounts_csv(
-    session: Session = Depends(get_session),
+    session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_active_superuser)
 ):
     """Export all accounts to CSV format."""

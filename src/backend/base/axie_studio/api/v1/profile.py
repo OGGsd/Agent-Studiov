@@ -4,13 +4,13 @@ Endpoints for user profile management and tier information.
 """
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlmodel.ext.asyncio.session import AsyncSession
 from pydantic import BaseModel
 
 from axie_studio.services.database.models.user.model import User, UserUpdate
-from axie_studio.services.deps import get_session, get_current_active_user
+from axie_studio.services.deps import get_session
+from axie_studio.services.auth.utils import get_current_active_user, get_password_hash
 from axie_studio.services.tier_limits import get_user_plan_info
-from axie_studio.services.auth.utils import get_password_hash
 
 
 router = APIRouter(prefix="/profile", tags=["profile"])
@@ -35,7 +35,7 @@ class ProfileUpdate(BaseModel):
 @router.get("/", response_model=ProfileResponse)
 async def get_profile(
     current_user: User = Depends(get_current_active_user),
-    session: Session = Depends(get_session)
+    session: AsyncSession = Depends(get_session)
 ):
     """Get current user's profile and plan information."""
     
@@ -57,7 +57,7 @@ async def get_profile(
 async def update_profile(
     profile_update: ProfileUpdate,
     current_user: User = Depends(get_current_active_user),
-    session: Session = Depends(get_session)
+    session: AsyncSession = Depends(get_session)
 ):
     """Update current user's profile (username and password only)."""
     
@@ -102,7 +102,7 @@ async def update_profile(
 @router.get("/usage")
 async def get_usage_summary(
     current_user: User = Depends(get_current_active_user),
-    session: Session = Depends(get_session)
+    session: AsyncSession = Depends(get_session)
 ):
     """Get detailed usage summary for the current user."""
     
@@ -112,7 +112,7 @@ async def get_usage_summary(
 @router.get("/plan")
 async def get_plan_details(
     current_user: User = Depends(get_current_active_user),
-    session: Session = Depends(get_session)
+    session: AsyncSession = Depends(get_session)
 ):
     """Get plan details and limits for the current user."""
     
