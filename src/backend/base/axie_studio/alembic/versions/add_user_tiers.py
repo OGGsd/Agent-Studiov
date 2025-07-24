@@ -17,19 +17,35 @@ head = None
 
 def upgrade():
     """Add tier-related columns to user table."""
-    # Add enum type for user tiers
-    tier_enum = postgresql.ENUM('starter', 'professional', 'enterprise', name='usertier')
-    tier_enum.create(op.get_bind())
-    
-    # Add new columns to user table
-    op.add_column('user', sa.Column('tier', tier_enum, nullable=False, server_default='starter'))
-    op.add_column('user', sa.Column('api_calls_used_this_month', sa.Integer(), nullable=False, server_default='0'))
-    op.add_column('user', sa.Column('storage_used_gb', sa.Float(), nullable=False, server_default='0.0'))
-    op.add_column('user', sa.Column('account_number', sa.Integer(), nullable=True))
-    
-    # Create index on account_number for faster lookups
-    op.create_index('ix_user_account_number', 'user', ['account_number'])
-    op.create_index('ix_user_tier', 'user', ['tier'])
+    # Check if columns exist before adding them
+    conn = op.get_bind()
+    inspector = sa.inspect(conn)
+    columns = [col['name'] for col in inspector.get_columns('user')]
+
+    # Add enum type for user tiers if it doesn't exist
+    if 'tier' not in columns:
+        tier_enum = postgresql.ENUM('starter', 'professional', 'enterprise', name='usertier')
+        tier_enum.create(op.get_bind())
+
+        # Add new columns to user table
+        op.add_column('user', sa.Column('tier', tier_enum, nullable=False, server_default='starter'))
+
+    if 'api_calls_used_this_month' not in columns:
+        op.add_column('user', sa.Column('api_calls_used_this_month', sa.Integer(), nullable=False, server_default='0'))
+    if 'storage_used_gb' not in columns:
+        op.add_column('user', sa.Column('storage_used_gb', sa.Float(), nullable=False, server_default='0.0'))
+    if 'account_number' not in columns:
+        op.add_column('user', sa.Column('account_number', sa.Integer(), nullable=True))
+
+    # Create indexes if they don't exist
+    try:
+        op.create_index('ix_user_account_number', 'user', ['account_number'])
+    except:
+        pass  # Index already exists
+    try:
+        op.create_index('ix_user_tier', 'user', ['tier'])
+    except:
+        pass  # Index already exists
 
 
 def downgrade():
