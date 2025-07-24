@@ -46,14 +46,14 @@ export function AuthProvider({ children }): React.ReactElement {
   const { mutate: mutateGetGlobalVariables } = useGetGlobalVariablesMutation();
 
   useEffect(() => {
-    const storedAccessToken = cookies.get(LANGFLOW_ACCESS_TOKEN);
+    const storedAccessToken = cookies.get(AXIE_STUDIO_ACCESS_TOKEN);
     if (storedAccessToken) {
       setAccessToken(storedAccessToken);
     }
   }, []);
 
   useEffect(() => {
-    const apiKey = cookies.get(LANGFLOW_API_TOKEN);
+    const apiKey = cookies.get(AXIE_STUDIO_API_TOKEN);
     if (apiKey) {
       setApiKey(apiKey);
     }
