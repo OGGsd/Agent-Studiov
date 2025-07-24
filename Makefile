@@ -189,7 +189,7 @@ unsafe_fix:
 	@uv run ruff check . --fix --unsafe-fixes
 
 lint: install_backend ## run linters
-	@uv run mypy --namespace-packages -p "langflow"
+	@uv run mypy --namespace-packages -p "axie_studio"
 
 
 

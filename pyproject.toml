@@ -7,17 +7,11 @@ license = "MIT"
 keywords = ["nlp", "langchain", "openai", "gpt", "gui", "axie", "studio"]
 readme = "README.md"
 maintainers = [
-    { name = "Carlos Coelho", email = "carlos@langflow.org" },
-    { name = "Cristhian Zanforlin", email = "cristhian.lousa@gmail.com" },
-    { name = "Gabriel Almeida", email = "gabriel@langflow.org" },
-    { name = "Lucas Eduoli", email = "lucaseduoli@gmail.com" },
-    { name = "Otávio Anovazzi", email = "otavio2204@gmail.com" },
-    { name = "Rodrigo Nader", email = "rodrigo@langflow.org" },
-    { name = "Italo dos Anjos", email = "italojohnnydosanjos@gmail.com" },
+    { name = "Axie Studio Team", email = "support@axiestudio.se" },
 ]
 # Define your main dependencies here
 dependencies = [
-    "langflow-base~=0.5.0",
+    "axie-studio-base~=0.5.0",
     "beautifulsoup4==4.12.3",
     "google-search-results>=2.4.1,<3.0.0",
     "google-api-python-client==2.154.0",
@@ -179,18 +173,18 @@ dev = [
 ]
 
 [tool.uv.sources]
-langflow-base = { workspace = true }
-langflow = { workspace = true }
+axie-studio-base = { workspace = true }
+axie-studio = { workspace = true }
 
 [tool.uv.workspace]
 members = ["src/backend/base", "."]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/backend/langflow"]
+packages = ["src/backend/axie_studio"]
 
 [project.urls]
-Repository = "https://github.com/YourUsername/axie-studio"
-Documentation = "https://docs.axie-studio.org"
+Repository = "https://github.com/axiestudio/axie-studio"
+Documentation = "https://docs.axiestudio.se"
 
 [project.optional-dependencies]
 docling = [
@@ -233,7 +227,7 @@ override-dependencies = [
 ]
 
 [project.scripts]
-axie-studio = "langflow.langflow_launcher:main"
+axie-studio = "axie_studio.langflow_launcher:main"
 
 [tool.codespell]
 skip = '.git,*.pdf,*.svg,*.pdf,*.yaml,*.ipynb,poetry.lock,*.min.js,*.css,package-lock.json,*.trig.,**/node_modules/**,./stuff/*,*.csv'
@@ -325,7 +319,7 @@ plugins = ["pydantic.mypy"]
 follow_imports = "skip"
 disable_error_code = ["type-var"]
 namespace_packages = true
-mypy_path = "langflow"
+mypy_path = "axie_studio"
 ignore_missing_imports = true
 
 [build-system]

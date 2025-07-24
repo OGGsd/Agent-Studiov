@@ -1,3 +1,3 @@
-FROM langflowai/langflow:latest
+FROM axiestudio/axie-studio:latest
 
-ENTRYPOINT ["python", "-m", "langflow", "run"]
+ENTRYPOINT ["python", "-m", "axie_studio", "run"]

@@ -1,29 +1,29 @@
 services:
-  langflow:
-    image: langflowai/langflow:latest # or another version tag on https://hub.docker.com/r/langflowai/langflow
+  axie-studio:
+    image: axiestudio/axie-studio:latest # or another version tag
     pull_policy: always               # set to 'always' when using 'latest' image
     ports:
       - "7860:7860"
     depends_on:
       - postgres
     environment:
-      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
+      - AXIE_STUDIO_DATABASE_URL=postgresql://axiestudio:axiestudio@postgres:5432/axiestudio
       # This variable defines where the logs, file storage, monitor data and secret keys are stored.
-      - LANGFLOW_CONFIG_DIR=app/langflow
+      - AXIE_STUDIO_CONFIG_DIR=app/axie_studio
     volumes:
-      - langflow-data:/app/langflow
+      - axie-studio-data:/app/axie_studio
 
   postgres:
     image: postgres:16
     environment:
-      POSTGRES_USER: langflow
-      POSTGRES_PASSWORD: langflow
-      POSTGRES_DB: langflow
+      POSTGRES_USER: axiestudio
+      POSTGRES_PASSWORD: axiestudio
+      POSTGRES_DB: axiestudio
     ports:
       - "5432:5432"
     volumes:
-      - langflow-postgres:/var/lib/postgresql/data
+      - axie-studio-postgres:/var/lib/postgresql/data
 
 volumes:
-  langflow-postgres:
-  langflow-data:
+  axie-studio-postgres:
+  axie-studio-data:

@@ -1,0 +1,16 @@
+{
+  "name": "axie-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Axie Studio - Build AI Agents and Workflows with Ease",
+  "homepage": "https://axiestudio.se",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OGGsd/agent-studio"
+  },
+  "bugs": {
+    "url": "https://github.com/OGGsd/agent-studio/issues"
+  },
+  "author": "OGGsd",
+  "license": "MIT"
+} 
