@@ -1,0 +1,39 @@
+{
+  "total_accounts": 600,
+  "tiers": {
+    "starter": {
+      "count": 200,
+      "price_per_month": 29,
+      "max_revenue": 5800,
+      "limits": {
+        "workflows": 50,
+        "api_calls": 5000,
+        "storage_gb": 1,
+        "support": "Email"
+      }
+    },
+    "professional": {
+      "count": 200,
+      "price_per_month": 79,
+      "max_revenue": 15800,
+      "limits": {
+        "workflows": 200,
+        "api_calls": 25000,
+        "storage_gb": 10,
+        "support": "Priority"
+      }
+    },
+    "enterprise": {
+      "count": 200,
+      "price_per_month": 199,
+      "max_revenue": 39800,
+      "limits": {
+        "workflows": -1,
+        "api_calls": 100000,
+        "storage_gb": 50,
+        "support": "24/7"
+      }
+    }
+  },
+  "potential_monthly_revenue": 61400
+}

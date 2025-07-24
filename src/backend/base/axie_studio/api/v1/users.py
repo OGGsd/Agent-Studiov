@@ -22,27 +22,16 @@ from axie_studio.services.deps import get_settings_service
 router = APIRouter(tags=["Users"], prefix="/users")
 
 
-@router.post("/", response_model=UserRead, status_code=201)
+@router.post("/", response_model=UserRead, status_code=403)
 async def add_user(
     user: UserCreate,
     session: DbSession,
 ) -> User:
-    """Add a new user to the database."""
-    new_user = User.model_validate(user, from_attributes=True)
-    try:
-        new_user.password = get_password_hash(user.password)
-        new_user.is_active = get_settings_service().auth_settings.NEW_USER_IS_ACTIVE
-        session.add(new_user)
-        await session.commit()
-        await session.refresh(new_user)
-        folder = await get_or_create_default_folder(session, new_user.id)
-        if not folder:
-            raise HTTPException(status_code=500, detail="Error creating default project")
-    except IntegrityError as e:
-        await session.rollback()
-        raise HTTPException(status_code=400, detail="This username is unavailable.") from e
-
-    return new_user
+    """User registration disabled - using pre-configured commercial accounts only."""
+    raise HTTPException(
+        status_code=403,
+        detail="User registration is disabled. Please contact sales for a pre-configured account."
+    )
 
 
 @router.get("/whoami", response_model=UserRead)

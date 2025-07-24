@@ -1,3 +1,4 @@
+from axie_studio.api.v1.accounts import router as accounts_router
 from axie_studio.api.v1.api_key import router as api_key_router
 from axie_studio.api.v1.chat import router as chat_router
 from axie_studio.api.v1.endpoints import router as endpoints_router
@@ -8,6 +9,7 @@ from axie_studio.api.v1.login import router as login_router
 from axie_studio.api.v1.mcp import router as mcp_router
 from axie_studio.api.v1.mcp_projects import router as mcp_projects_router
 from axie_studio.api.v1.monitor import router as monitor_router
+from axie_studio.api.v1.profile import router as profile_router
 from axie_studio.api.v1.projects import router as projects_router
 from axie_studio.api.v1.starter_projects import router as starter_projects_router
 from axie_studio.api.v1.store import router as store_router

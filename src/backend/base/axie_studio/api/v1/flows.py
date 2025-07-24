@@ -158,6 +158,10 @@ async def create_flow(
     flow: FlowCreate,
     current_user: CurrentActiveUser,
 ):
+    # Check workflow limits before creating
+    from axie_studio.services.tier_limits import track_workflow_creation
+    track_workflow_creation(current_user, session)
+
     try:
         db_flow = await _new_flow(session=session, flow=flow, user_id=current_user.id)
         await session.commit()
@@ -410,6 +414,14 @@ async def create_flows(
     current_user: CurrentActiveUser,
 ):
     """Create multiple new flows."""
+    # Check workflow limits for batch creation
+    from axie_studio.services.tier_limits import TierLimitsService
+    limits_service = TierLimitsService(session)
+
+    # Check if user can create all requested flows
+    for _ in flow_list.flows:
+        limits_service.enforce_workflow_limit(current_user)
+
     db_flows = []
     for flow in flow_list.flows:
         flow.user_id = current_user.id

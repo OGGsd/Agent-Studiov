@@ -154,6 +154,7 @@ async def build_flow(
     queue_service: Annotated[JobQueueService, Depends(get_queue_service)],
     flow_name: str | None = None,
     event_delivery: EventDeliveryType = EventDeliveryType.POLLING,
+    session: DbSession,
 ):
     """Build and process a flow, returning a job ID for event polling.
 
@@ -177,6 +178,10 @@ async def build_flow(
     Returns:
         Dict with job_id that can be used to poll for build status
     """
+    # Track API call usage for flow execution
+    from axie_studio.services.tier_limits import track_api_execution
+    track_api_execution(current_user, session, 1)
+
     # First verify the flow exists
     async with session_scope() as session:
         flow = await session.get(Flow, flow_id)
