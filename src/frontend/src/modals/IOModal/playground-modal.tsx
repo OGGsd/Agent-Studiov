@@ -13,10 +13,10 @@ import { useGetSessionsFromFlowQuery } from "@/controllers/API/queries/messages/
 import { ENABLE_PUBLISH } from "@/customization/feature-flags";
 import { track } from "@/customization/utils/analytics";
 import { customOpenNewTab } from "@/customization/utils/custom-open-new-tab";
-import { LangflowButtonRedirectTarget } from "@/customization/utils/urls";
+import { AxieStudioButtonRedirectTarget } from "@/customization/utils/urls";
 import { useUtilityStore } from "@/stores/utilityStore";
 import { swatchColors } from "@/utils/styleUtils";
-import LangflowLogoColor from "../../assets/LangflowLogoColor.svg?react";
+import AxieStudioLogoColor from "../../assets/AxieStudioLogoColor.svg?react";
 import IconComponent from "../../components/common/genericIconComponent";
 import ShadTooltip from "../../components/common/shadTooltipComponent";
 import { Button } from "../../components/ui/button";
@@ -304,9 +304,9 @@ export default function IOModal({
 
   const showPublishOptions = playgroundPage && ENABLE_PUBLISH;
 
-  const LangflowButtonClick = () => {
-    track("LangflowButtonClick");
-    customOpenNewTab(LangflowButtonRedirectTarget());
+  const AxieStudioButtonClick = () => {
+    track("AxieStudioButtonClick");
+    customOpenNewTab(AxieStudioButtonRedirectTarget());
   };
 
   useEffect(() => {
@@ -434,11 +434,11 @@ export default function IOModal({
                       <ThemeButtons />
                     </div>
                     <Button
-                      onClick={LangflowButtonClick}
+                      onClick={AxieStudioButtonClick}
                       variant="primary"
                       className="w-full !rounded-xl shadow-lg"
                     >
-                      <LangflowLogoColor />
+                      <AxieStudioLogoColor />
                       <div className="text-sm">Built with Axie Studio</div>
                     </Button>
                   </div>
@@ -455,9 +455,9 @@ export default function IOModal({
                   <Button
                     variant="primary"
                     className="h-12 w-12 !rounded-xl !p-4 shadow-lg"
-                    onClick={LangflowButtonClick}
+                    onClick={AxieStudioButtonClick}
                   >
-                    <LangflowLogoColor className="h-[18px] w-[18px] scale-150" />
+                    <AxieStudioLogoColor className="h-[18px] w-[18px] scale-150" />
                   </Button>
                 </ShadTooltip>
               </div>
