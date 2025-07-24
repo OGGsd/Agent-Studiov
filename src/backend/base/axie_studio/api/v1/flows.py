@@ -160,7 +160,7 @@ async def create_flow(
 ):
     # Check workflow limits before creating
     from axie_studio.services.tier_limits import track_workflow_creation
-    track_workflow_creation(current_user, session)
+    await track_workflow_creation(current_user, session)
 
     try:
         db_flow = await _new_flow(session=session, flow=flow, user_id=current_user.id)
