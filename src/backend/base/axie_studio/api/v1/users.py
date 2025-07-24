@@ -18,20 +18,44 @@ from axie_studio.services.auth.utils import (
 from axie_studio.services.database.models.user.crud import get_user_by_id, update_user
 from axie_studio.services.database.models.user.model import User, UserCreate, UserRead, UserUpdate
 from axie_studio.services.deps import get_settings_service
+from axie_studio.services.auth.utils import get_current_active_user, get_password_hash
 
 router = APIRouter(tags=["Users"], prefix="/users")
 
 
-@router.post("/", response_model=UserRead, status_code=403)
+@router.post("/", response_model=UserRead, status_code=201)
 async def add_user(
     user: UserCreate,
     session: DbSession,
+    current_user: User = Depends(get_current_active_user),
 ) -> User:
-    """User registration disabled - using pre-configured commercial accounts only."""
-    raise HTTPException(
-        status_code=403,
-        detail="User registration is disabled. Please contact sales for a pre-configured account."
-    )
+    """Add a new user to the database. Only admins can create users."""
+    # Check if current user is admin/superuser
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code=403,
+            detail="Only administrators can create new users."
+        )
+
+    new_user = User.model_validate(user, from_attributes=True)
+    try:
+        new_user.password = get_password_hash(user.password)
+        new_user.is_active = get_settings_service().auth_settings.NEW_USER_IS_ACTIVE
+        session.add(new_user)
+        await session.commit()
+        await session.refresh(new_user)
+
+        # Create default folder for the new user
+        from axie_studio.services.database.models.folder.crud import get_or_create_default_folder
+        folder = await get_or_create_default_folder(session, new_user.id)
+        if not folder:
+            raise HTTPException(status_code=500, detail="Error creating default project")
+
+    except IntegrityError as e:
+        await session.rollback()
+        raise HTTPException(status_code=400, detail="This username is unavailable.") from e
+
+    return new_user
 
 
 @router.get("/whoami", response_model=UserRead)
