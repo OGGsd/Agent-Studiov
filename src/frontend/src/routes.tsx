@@ -37,12 +37,15 @@ import ShortcutsPage from "./pages/SettingsPage/pages/ShortcutsPage";
 import ViewPage from "./pages/ViewPage";
 
 const AdminPage = lazy(() => import("./pages/AdminPage"));
+const AdminAccountsPage = lazy(() => import("./pages/AdminPage/AccountsPage"));
 const LoginAdminPage = lazy(() => import("./pages/AdminPage/LoginPage"));
 const DeleteAccountPage = lazy(() => import("./pages/DeleteAccountPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 
 const PlaygroundPage = lazy(() => import("./pages/Playground"));
 
-const SignUp = lazy(() => import("./pages/SignUpPage"));
+// SignUp functionality removed for commercial pre-configured accounts
+// const SignUp = lazy(() => import("./pages/SignUpPage"));
 
 const router = createBrowserRouter(
   createRoutesFromElements([
@@ -143,14 +146,25 @@ const router = createBrowserRouter(
                 <Route path="account">
                   <Route path="delete" element={<DeleteAccountPage />}></Route>
                 </Route>
-                <Route
-                  path="admin"
-                  element={
-                    <ProtectedAdminRoute>
-                      <AdminPage />
-                    </ProtectedAdminRoute>
-                  }
-                />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="admin">
+                  <Route
+                    path=""
+                    element={
+                      <ProtectedAdminRoute>
+                        <AdminPage />
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="accounts"
+                    element={
+                      <ProtectedAdminRoute>
+                        <AdminAccountsPage />
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                </Route>
               </Route>
               <Route path="flow/:id/">
                 <Route path="" element={<CustomDashboardWrapperPage />}>
@@ -169,14 +183,15 @@ const router = createBrowserRouter(
               </ProtectedLoginRoute>
             }
           />
-          <Route
+          {/* Signup route removed for commercial pre-configured accounts */}
+          {/* <Route
             path="signup"
             element={
               <ProtectedLoginRoute>
                 <SignUp />
               </ProtectedLoginRoute>
             }
-          />
+          /> */}
           <Route
             path="login/admin"
             element={

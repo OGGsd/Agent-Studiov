@@ -286,19 +286,10 @@ export default function AdminPage() {
               )}
             </div>
             <div>
-              <UserManagementModal
-                title="New User"
-                titleHeader={"Add a new user"}
-                cancelText="Cancel"
-                confirmationText="Save"
-                icon={"UserPlus2"}
-                onConfirm={(index, user) => {
-                  handleNewUser(user);
-                }}
-                asChild
-              >
-                <Button variant="primary">New User</Button>
-              </UserManagementModal>
+              {/* New User functionality replaced with pre-configured account management */}
+              <Button variant="primary" onClick={() => window.location.href = '/admin/accounts'}>
+                Manage Accounts
+              </Button>
             </div>
           </div>
           {isPending || isIdle ? (

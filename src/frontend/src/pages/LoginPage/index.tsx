@@ -2,7 +2,7 @@ import * as Form from "@radix-ui/react-form";
 import { useContext, useState } from "react";
 import AxieStudioLogo from "@/assets/AxieStudioLogo.svg?react";
 import { useLoginUser } from "@/controllers/API/queries/auth";
-import { CustomLink } from "@/customization/components/custom-link";
+// CustomLink removed - no signup functionality needed
 import InputComponent from "../../components/core/parameterRenderComponent/components/inputComponent";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -137,12 +137,11 @@ export default function LoginPage(): JSX.Element {
               </Button>
             </Form.Submit>
           </div>
-          <div className="mt-4 w-full">
-            <CustomLink to="/signup">
-              <Button className="w-full bg-white hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-md border border-slate-300 transition-colors duration-200" variant="outline" type="button">
-                Don't have an account? <span className="font-semibold">Sign Up</span>
-              </Button>
-            </CustomLink>
+          {/* Signup removed - Commercial pre-configured accounts only */}
+          <div className="mt-4 w-full text-center">
+            <p className="text-sm text-slate-600">
+              Need an account? Contact sales for pre-configured access.
+            </p>
           </div>
           <div className="mt-6 text-center">
             <p className="text-sm text-slate-500">
