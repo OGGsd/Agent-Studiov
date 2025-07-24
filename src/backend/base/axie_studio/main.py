@@ -12,6 +12,13 @@ from urllib.parse import urlencode
 import anyio
 import httpx
 import sqlalchemy
+
+# Import compatibility layer early to ensure langflow modules are available
+try:
+    from axie_studio.compatibility import langflow_compat
+    langflow_compat.create_compatibility_modules()
+except ImportError:
+    pass
 from fastapi import FastAPI, HTTPException, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse

@@ -130,7 +130,7 @@
             "custom_fields": {},
             "description": "Use Apify Actors to extract data from hundreds of places fast. This component can be used in a flow to retrieve data or as a tool with an agent.",
             "display_name": "Apify Actors",
-            "documentation": "http://docs.langflow.org/integrations-apify",
+            "documentation": "http://docs.axiestudio.com/integrations-apify",
             "edited": false,
             "field_order": [
               "apify_token",
@@ -336,7 +336,7 @@
             "custom_fields": {},
             "description": "Use Apify Actors to extract data from hundreds of places fast. This component can be used in a flow to retrieve data or as a tool with an agent.",
             "display_name": "Apify Actors",
-            "documentation": "http://docs.langflow.org/integrations-apify",
+            "documentation": "http://docs.axiestudio.com/integrations-apify",
             "edited": false,
             "field_order": [
               "apify_token",

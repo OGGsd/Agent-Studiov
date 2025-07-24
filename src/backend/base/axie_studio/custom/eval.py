@@ -1,5 +1,12 @@
 from typing import TYPE_CHECKING
 
+# Import compatibility layer early to ensure langflow modules are available
+try:
+    from axie_studio.compatibility import langflow_compat
+    langflow_compat.create_compatibility_modules()
+except ImportError:
+    pass
+
 from axie_studio.utils import validate
 
 if TYPE_CHECKING:

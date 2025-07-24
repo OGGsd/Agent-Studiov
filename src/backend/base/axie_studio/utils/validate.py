@@ -9,6 +9,13 @@ from langchain_core._api.deprecation import LangChainDeprecationWarning
 from loguru import logger
 from pydantic import ValidationError
 
+# Import compatibility layer early to ensure langflow modules are available
+try:
+    from axie_studio.compatibility import langflow_compat
+    langflow_compat.create_compatibility_modules()
+except ImportError:
+    pass
+
 from axie_studio.field_typing.constants import CUSTOM_COMPONENT_SUPPORTED_TYPES, DEFAULT_IMPORT_STRING
 
 
@@ -358,10 +365,10 @@ def get_default_imports(code_string):
         "Dict": dict,
         "Union": Union,
     }
-    langflow_imports = list(CUSTOM_COMPONENT_SUPPORTED_TYPES.keys())
-    necessary_imports = find_names_in_code(code_string, langflow_imports)
-    langflow_module = importlib.import_module("langflow.field_typing")
-    default_imports.update({name: getattr(langflow_module, name) for name in necessary_imports})
+    axie_studio_imports = list(CUSTOM_COMPONENT_SUPPORTED_TYPES.keys())
+    necessary_imports = find_names_in_code(code_string, axie_studio_imports)
+    axie_studio_module = importlib.import_module("axie_studio.field_typing")
+    default_imports.update({name: getattr(axie_studio_module, name) for name in necessary_imports})
 
     return default_imports
 

@@ -180,7 +180,7 @@ async def build_flow(
     """
     # Track API call usage for flow execution
     from axie_studio.services.tier_limits import track_api_execution
-    track_api_execution(current_user, session, 1)
+    await track_api_execution(current_user, session, 1)
 
     # First verify the flow exists
     async with session_scope() as session:

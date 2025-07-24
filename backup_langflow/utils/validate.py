@@ -9,7 +9,7 @@ from langchain_core._api.deprecation import LangChainDeprecationWarning
 from loguru import logger
 from pydantic import ValidationError
 
-from langflow.field_typing.constants import CUSTOM_COMPONENT_SUPPORTED_TYPES, DEFAULT_IMPORT_STRING
+from axie_studio.field_typing.constants import CUSTOM_COMPONENT_SUPPORTED_TYPES, DEFAULT_IMPORT_STRING
 
 
 def add_type_ignores() -> None:
@@ -185,10 +185,10 @@ def create_class(code, class_name):
     if not hasattr(ast, "TypeIgnore"):
         ast.TypeIgnore = create_type_ignore_class()
 
-    code = code.replace("from langflow import CustomComponent", "from langflow.custom import CustomComponent")
+    code = code.replace("from langflow import CustomComponent", "from axie_studio.custom import CustomComponent")
     code = code.replace(
         "from langflow.interface.custom.custom_component import CustomComponent",
-        "from langflow.custom import CustomComponent",
+        "from axie_studio.custom import CustomComponent",
     )
 
     code = DEFAULT_IMPORT_STRING + "\n" + code
@@ -358,10 +358,10 @@ def get_default_imports(code_string):
         "Dict": dict,
         "Union": Union,
     }
-    langflow_imports = list(CUSTOM_COMPONENT_SUPPORTED_TYPES.keys())
-    necessary_imports = find_names_in_code(code_string, langflow_imports)
-    langflow_module = importlib.import_module("langflow.field_typing")
-    default_imports.update({name: getattr(langflow_module, name) for name in necessary_imports})
+    axie_studio_imports = list(CUSTOM_COMPONENT_SUPPORTED_TYPES.keys())
+    necessary_imports = find_names_in_code(code_string, axie_studio_imports)
+    axie_studio_module = importlib.import_module("axie_studio.field_typing")
+    default_imports.update({name: getattr(axie_studio_module, name) for name in necessary_imports})
 
     return default_imports
 

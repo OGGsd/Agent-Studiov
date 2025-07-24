@@ -36,9 +36,9 @@ component_cache = ComponentCache()
 
 
 async def import_langflow_components():
-    """Asynchronously discovers and loads all built-in Langflow components with module-level parallelization.
+    """Asynchronously discovers and loads all built-in Axie Studio components with module-level parallelization.
 
-    Scans the `langflow.components` package and its submodules in parallel, instantiates classes that are subclasses
+    Scans the `axie_studio.components` package and its submodules in parallel, instantiates classes that are subclasses
     of `Component` or `CustomComponent`, and generates their templates. Components are grouped by their
     top-level subpackage name.
 

@@ -249,7 +249,7 @@ def run(
     ),
     ssl_key_file_path: str | None = typer.Option(None, help="Defines the SSL key file path.", show_default=False),
 ) -> None:
-    """Run Langflow."""
+    """Run Axie Studio."""
     if env_file:
         load_dotenv(env_file, override=True)
 
@@ -257,11 +257,11 @@ def run(
     log_level_str = "info" if log_level is None else log_level.lower()
 
     # Must set as env var for child process to pick up
-    env_log_level = os.environ.get("LANGFLOW_LOG_LEVEL")
+    env_log_level = os.environ.get("AXIE_STUDIO_LOG_LEVEL")
     if env_log_level is None:
-        os.environ["LANGFLOW_LOG_LEVEL"] = log_level_str
+        os.environ["AXIE_STUDIO_LOG_LEVEL"] = log_level_str
     else:
-        os.environ["LANGFLOW_LOG_LEVEL"] = env_log_level.lower()
+        os.environ["AXIE_STUDIO_LOG_LEVEL"] = env_log_level.lower()
 
     configure(log_level=log_level, log_file=log_file)
 
@@ -269,7 +269,7 @@ def run(
     verbose = log_level == "debug"
     progress = create_langflow_progress(verbose=verbose)
 
-    # Step 0: Initializing Langflow
+    # Step 0: Initializing Axie Studio
     with progress.step(0):
         logger.debug(f"Loading config from file: '{env_file}'" if env_file else "No env_file provided.")
         set_var_for_macos_issue()

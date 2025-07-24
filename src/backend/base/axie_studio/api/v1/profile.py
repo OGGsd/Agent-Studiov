@@ -38,9 +38,9 @@ async def get_profile(
     session: AsyncSession = Depends(get_session)
 ):
     """Get current user's profile and plan information."""
-    
-    plan_info = get_user_plan_info(current_user, session)
-    
+
+    plan_info = await get_user_plan_info(current_user, session)
+
     return ProfileResponse(
         id=str(current_user.id),
         username=current_user.username,
@@ -85,8 +85,8 @@ async def update_profile(
     session.refresh(current_user)
     
     # Return updated profile
-    plan_info = get_user_plan_info(current_user, session)
-    
+    plan_info = await get_user_plan_info(current_user, session)
+
     return ProfileResponse(
         id=str(current_user.id),
         username=current_user.username,
@@ -105,8 +105,8 @@ async def get_usage_summary(
     session: AsyncSession = Depends(get_session)
 ):
     """Get detailed usage summary for the current user."""
-    
-    return get_user_plan_info(current_user, session)
+
+    return await get_user_plan_info(current_user, session)
 
 
 @router.get("/plan")
@@ -115,9 +115,9 @@ async def get_plan_details(
     session: AsyncSession = Depends(get_session)
 ):
     """Get plan details and limits for the current user."""
-    
-    plan_info = get_user_plan_info(current_user, session)
-    
+
+    plan_info = await get_user_plan_info(current_user, session)
+
     return {
         "tier": current_user.tier.value,
         "account_number": current_user.account_number,

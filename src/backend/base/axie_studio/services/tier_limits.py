@@ -28,7 +28,7 @@ class TierLimitsService:
 
         # Use async SQLAlchemy syntax
         stmt = select(func.count(Flow.id)).where(Flow.user_id == user.id)
-        result = await self.db.execute(stmt)
+        result = await self.db.exec(stmt)
         current_workflows = result.scalar()
         return current_workflows < limits.max_workflows
     
@@ -124,7 +124,7 @@ class TierLimitsService:
         }
 
 
-def get_tier_limits_service(db_session: Session) -> TierLimitsService:
+def get_tier_limits_service(db_session: AsyncSession) -> TierLimitsService:
     """Dependency to get TierLimitsService instance."""
     return TierLimitsService(db_session)
 
@@ -140,7 +140,7 @@ def track_api_call(calls: int = 1):
             
             if current_user and session:
                 limits_service = TierLimitsService(session)
-                limits_service.increment_api_calls(current_user, calls)
+                await limits_service.increment_api_calls(current_user, calls)
             
             return await func(*args, **kwargs)
         return wrapper
@@ -148,14 +148,14 @@ def track_api_call(calls: int = 1):
 
 
 # Middleware function to check limits before workflow operations
-async def check_workflow_limits(user: User, db_session: Session):
+async def check_workflow_limits(user: User, db_session: AsyncSession):
     """Check workflow limits before creating new workflows."""
     limits_service = TierLimitsService(db_session)
-    limits_service.enforce_workflow_limit(user)
+    await limits_service.enforce_workflow_limit(user)
 
 
 # Middleware function to check limits before file operations
-async def check_storage_limits(user: User, db_session: Session, file_size_gb: float):
+async def check_storage_limits(user: User, db_session: AsyncSession, file_size_gb: float):
     """Check storage limits before uploading files."""
     limits_service = TierLimitsService(db_session)
     limits_service.enforce_storage_limit(user, file_size_gb)
