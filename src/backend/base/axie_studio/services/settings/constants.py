@@ -1,5 +1,5 @@
-DEFAULT_SUPERUSER = "admin"
-DEFAULT_SUPERUSER_PASSWORD = "change_me_in_production"  # noqa: S105
+DEFAULT_SUPERUSER = "stefan@axiestudio.se"
+DEFAULT_SUPERUSER_PASSWORD = "STEfanjohn!12"  # noqa: S105
 VARIABLES_TO_GET_FROM_ENVIRONMENT = [
     "COMPOSIO_API_KEY",
     "OPENAI_API_KEY",

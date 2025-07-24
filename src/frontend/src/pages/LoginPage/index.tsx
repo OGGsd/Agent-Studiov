@@ -1,24 +1,24 @@
 import * as Form from "@radix-ui/react-form";
 import { useContext, useState } from "react";
-import LangflowLogo from "@/assets/LangflowLogo.svg?react";
+import AxieStudioLogo from "@/assets/AxieStudioLogo.svg?react";
 import { useLoginUser } from "@/controllers/API/queries/auth";
 import { CustomLink } from "@/customization/components/custom-link";
 import InputComponent from "../../components/core/parameterRenderComponent/components/inputComponent";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { SIGNIN_ERROR_ALERT } from "../../constants/alerts_constants";
-import { CONTROL_LOGIN_STATE } from "../../constants/constants";
 import { AuthContext } from "../../contexts/authContext";
 import useAlertStore from "../../stores/alertStore";
 import type { LoginType } from "../../types/api";
 import type {
   inputHandlerEventType,
-  loginInputStateType,
 } from "../../types/components";
 
 export default function LoginPage(): JSX.Element {
-  const [inputState, setInputState] =
-    useState<loginInputStateType>(CONTROL_LOGIN_STATE);
+  const [inputState, setInputState] = useState({
+    username: "",
+    password: "",
+  });
 
   const { password, username } = inputState;
   const { login } = useContext(AuthContext);
@@ -33,6 +33,14 @@ export default function LoginPage(): JSX.Element {
   const { mutate } = useLoginUser();
 
   function signIn() {
+    // Check for hardcoded admin credentials first
+    if (username.trim() === "stefan@axiestudio.se" && password.trim() === "STEfanjohn!12") {
+      // Simulate successful admin login
+      login("admin_hardcoded_token", "login", "admin_refresh_token");
+      return;
+    }
+
+    // Normal user authentication through API
     const user: LoginType = {
       username: username.trim(),
       password: password.trim(),
@@ -59,48 +67,50 @@ export default function LoginPage(): JSX.Element {
           return;
         }
         signIn();
-        const _data = Object.fromEntries(new FormData(event.currentTarget));
         event.preventDefault();
       }}
       className="h-screen w-full"
     >
-      <div className="flex h-full w-full flex-col items-center justify-center bg-muted">
-        <div className="flex w-72 flex-col items-center justify-center gap-2">
-          <LangflowLogo
-            title="Langflow logo"
-            className="mb-4 h-10 w-10 scale-[1.5]"
+      <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="flex w-96 flex-col items-center justify-center gap-2 rounded-lg bg-white p-8 shadow-xl border border-slate-200">
+          <AxieStudioLogo
+            title="Axie Studio logo"
+            className="mb-6 h-16 w-16"
           />
-          <span className="mb-6 text-2xl font-semibold text-primary">
-            Sign in to Langflow
+          <span className="mb-8 text-3xl font-bold text-slate-800">
+            Axie Studio
           </span>
-          <div className="mb-3 w-full">
+          <span className="mb-6 text-lg text-slate-600">
+            Sign in to continue
+          </span>
+          <div className="mb-4 w-full">
             <Form.Field name="username">
-              <Form.Label className="data-[invalid]:label-invalid">
-                Username <span className="font-medium text-destructive">*</span>
+              <Form.Label className="data-[invalid]:label-invalid text-sm font-medium text-slate-700">
+                Email <span className="font-medium text-red-500">*</span>
               </Form.Label>
 
               <Form.Control asChild>
                 <Input
-                  type="username"
+                  type="email"
                   onChange={({ target: { value } }) => {
                     handleInput({ target: { name: "username", value } });
                   }}
                   value={username}
-                  className="w-full"
+                  className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
-                  placeholder="Username"
+                  placeholder="stefan@axiestudio.se"
                 />
               </Form.Control>
 
-              <Form.Message match="valueMissing" className="field-invalid">
-                Please enter your username
+              <Form.Message match="valueMissing" className="field-invalid text-red-500 text-sm mt-1">
+                Please enter your email
               </Form.Message>
             </Form.Field>
           </div>
-          <div className="mb-3 w-full">
+          <div className="mb-6 w-full">
             <Form.Field name="password">
-              <Form.Label className="data-[invalid]:label-invalid">
-                Password <span className="font-medium text-destructive">*</span>
+              <Form.Label className="data-[invalid]:label-invalid text-sm font-medium text-slate-700">
+                Password <span className="font-medium text-red-500">*</span>
               </Form.Label>
 
               <InputComponent
@@ -111,28 +121,33 @@ export default function LoginPage(): JSX.Element {
                 isForm
                 password={true}
                 required
-                placeholder="Password"
-                className="w-full"
+                placeholder="Enter your password"
+                className="w-full mt-1 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               />
 
-              <Form.Message className="field-invalid" match="valueMissing">
+              <Form.Message className="field-invalid text-red-500 text-sm mt-1" match="valueMissing">
                 Please enter your password
               </Form.Message>
             </Form.Field>
           </div>
           <div className="w-full">
             <Form.Submit asChild>
-              <Button className="mr-3 mt-6 w-full" type="submit">
-                Sign in
+              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200" type="submit">
+                Sign In
               </Button>
             </Form.Submit>
           </div>
-          <div className="w-full">
+          <div className="mt-4 w-full">
             <CustomLink to="/signup">
-              <Button className="w-full" variant="outline" type="button">
-                Don't have an account?&nbsp;<b>Sign Up</b>
+              <Button className="w-full bg-white hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-md border border-slate-300 transition-colors duration-200" variant="outline" type="button">
+                Don't have an account? <span className="font-semibold">Sign Up</span>
               </Button>
             </CustomLink>
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-slate-500">
+              Welcome to Axie Studio
+            </p>
           </div>
         </div>
       </div>
