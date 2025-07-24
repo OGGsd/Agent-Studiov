@@ -1,7 +1,7 @@
 """Add user tiers and commercial features
 
 Revision ID: add_user_tiers
-Revises: 
+Revises: 3162e83e485f
 Create Date: 2025-07-24 12:00:00.000000
 
 """
@@ -11,7 +11,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision = 'add_user_tiers'
-down_revision = None  # Will be updated to latest revision
+down_revision = '3162e83e485f'  # Points to the latest Langflow migration
 head = None
 
 

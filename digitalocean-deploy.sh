@@ -42,7 +42,13 @@ cd ../backend/base
 
 # Step 4: Run database migrations
 print_status "Running database migrations..."
-python -m alembic upgrade head
+# Handle multiple heads by upgrading to our specific migration
+python -m alembic upgrade add_user_tiers || {
+    print_warning "Migration conflict detected, attempting to resolve..."
+    # If there are multiple heads, merge them
+    python -m alembic merge heads -m "merge_migration_heads" || true
+    python -m alembic upgrade head
+}
 
 # Step 5: 🎯 IMPORT PRE-CONFIGURED ACCOUNTS (THE KEY STEP!)
 print_status "🎯 IMPORTING 600 PRE-CONFIGURED COMMERCIAL ACCOUNTS..."
