@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -6,13 +6,17 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Install uv
+RUN pip install uv
 
 # Copy project files
 COPY . .
 
-# Install dependencies
-RUN pip install --no-cache-dir -e .
+# Install dependencies using uv
+RUN uv sync --frozen
 
 # Expose the default Axie Studio port
 EXPOSE 7860
@@ -22,4 +26,4 @@ ENV AXIE_STUDIO_HOST=0.0.0.0
 ENV AXIE_STUDIO_PORT=7860
 
 # Start the application
-CMD ["axie-studio", "run"] 
+CMD ["uv", "run", "axie-studio", "run", "--host", "0.0.0.0", "--port", "7860"]
